@@ -1,0 +1,4 @@
+.env
+config.py
+__pycache__/config.cpython-35.pyc
+__pycache__/index.cpython-35.pyc

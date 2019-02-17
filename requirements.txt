@@ -1,0 +1,4 @@
+flask==1.0.2
+flask_oauthlib==2.1.0
+flask_sqlalchemy==2.3.1
+gunicorn==19.9.0
