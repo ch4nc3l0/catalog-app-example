@@ -6,8 +6,11 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>This is a HEADING NOT A ROBOT :[]</h1>
-    <h2>Catagories:</h2>
-
+    <img src="{{user.picurl}}">
+    <h3>Your username is {{user.username}}</h3>
+    <p>your id is {{user.id}}</p>
+    <form method="POST">
+        <input type="submit" name="revoke_github" value="Revoke github permissions">
+    </form>
 </body>
 </html>
