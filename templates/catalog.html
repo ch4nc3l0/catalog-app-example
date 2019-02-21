@@ -1,0 +1,40 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+
+            <form method="POST">
+                <input id="loginButt" name="login" type="submit" value="Login">
+                <input id="logoutButt" name="logout" type="submit" value="Logout">
+            </form>
+
+        <div>
+            <h1>Categories:</h1>
+            <a id="newCat" href="{{ flask.url_for('addCategory') }}" >New Category</a>
+        </br>
+
+            {% for category in categories %}
+               <a href="{{ flask.url_for('categories', category_name=category.name) }}"> {{category.name}} </a>
+                <a id="editCat" href="{{ flask.url_for('updateCategories', category_name=category.name, category=category) }}" >Edit Category</a>
+                <a id="delCat" href="{{ flask.url_for('deleteCategories', category_name=category.name, category=category) }}" >Delete Category</a>
+                
+            {% endfor %}
+        </div>
+
+        <div>
+            <h1>Items:</h1>
+            {% for item in items %}
+                <a href="{{ flask.url_for('items', category_id=item.category_id, item_name=item.name) }}" >{{item.name}}</a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="catalog.js"> </script>
+
+</body>
+</html>

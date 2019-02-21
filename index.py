@@ -18,7 +18,7 @@ logMan = LoginManager(app)
 logMan.login_view = 'login'
 
 
-from models import User
+from models import User, Category, Item
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -34,7 +34,7 @@ def login():
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
     logout_user()
-    return flask.render_template('index.html')
+    return flask.redirect('catalog')
 
 
 @app.route('/profile', methods=['GET', 'POST'])
@@ -58,7 +58,7 @@ git_token_url = 'https://github.com/login/oauth/access_token'
 def auth():
     # Check if user is already authenticated
     if current_user.is_authenticated:
-        # Redirect a user to the page they tried to log in from
+        # Redirect a user to the page they logged in from
         next_page = flask.request.args.get('next')
         if not next_page:
             next_page = flask.url_for('catalog')
@@ -118,62 +118,73 @@ def callback():
     return flask.redirect(next_page)
 
 
-# Show all catagories
-@app.route('/')
-@app.route('/catalog')
+# Show all catagories / most recent items
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/catalog', methods=['GET', 'POST'])
 def catalog():
-    return flask.render_template('index.html')
+    user = ''
+    categories = Category.query.all()
+    items = Item.query.order_by(Item.timestamp).limit(15).all()
+    if current_user.is_authenticated:
+        user = current_user
+    if flask.request.method == "POST":
+        if 'login' in flask.request.form:
+            return flask.redirect('login')
+        if 'logout' in flask.request.form:
+            return flask.redirect('logout')
+    return flask.render_template('catalog.html',
+                                 categories=categories, items=items, user=user)
 
 
 # Add a new catagory to the catalog
 @app.route('/catalog/add')
 @login_required
-def addCatagory():
-    return flask.render_template('user.html')
+def addCategory():
+    return flask.render_template('catalog.html')
 
 
 # Show all items in a catagory
-@app.route('/catalog/<catagory>')
-def catagories():
-    return flask.render_template('index.html')
+@app.route('/catalog/<category_name>')
+def categories():
+    return flask.render_template('catalog.html')
 
 
 # Add an item to the catagory
-@app.route('/catalog/<catagory>/add')
+@app.route('/catalog/<category>/add')
 @login_required
-def addCatagories():
-    return flask.render_template('index.html')
+def addCategories():
+    return flask.render_template('catalog.html')
 
 
 # Update the current catagory
-@app.route('/catalog/<catagory>/update')
+@app.route('/catalog/<category_name>/update')
 @login_required
-def updateCatagories():
+def updateCategories():
     return flask.render_template('index.html')
 
 
 # Delete the current catagory
-@app.route('/catalog/<catagory>/delete')
+@app.route('/catalog/<category_name>/delete')
 @login_required
-def deleteCatagories():
+def deleteCategories():
     return flask.render_template('index.html')
 
 
 # Show item details
-@app.route('/catalog/<catagory>/<item>')
+@app.route('/catalog/<category_id>/<item>')
 def items():
     return flask.render_template('index.html')
 
 
 # Update item details
-@app.route('/catalog/<catagory>/<item>/update')
+@app.route('/catalog/<category_id>/<item>/update')
 @login_required
 def updateItems():
     return flask.render_template('index.html')
 
 
 # Delete item
-@app.route('/catalog/<catagory>/<item>/delete')
+@app.route('/catalog/<category_id>/<item>/delete')
 @login_required
 def deleteItems():
     return flask.render_template('index.html')
@@ -186,12 +197,12 @@ def jsonCatalog():
 
 
 # json data for a catagory page
-@app.route('/catalog/<catagory>/json')
-def jsonCatagories():
+@app.route('/catalog/<category_name>/json')
+def jsonCategories():
     return flask.render_template('index.html')
 
 
 # json data for an item
-@app.route('/catalog/<catagory>/<item>/json')
+@app.route('/catalog/<category_id>/<item>/json')
 def jsonItems():
     return flask.render_template('index.html')
