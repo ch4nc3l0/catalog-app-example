@@ -43,6 +43,7 @@ class Item(db.Model):
     description = db.Column(db.String(1000), nullable=False)
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     name = db.Column(db.String(80), nullable=False)
+    timestamp = db.Column(db.TIMESTAMP)
 
     def __init__(self, category, category_id, description, id, name):
         self.id = category
