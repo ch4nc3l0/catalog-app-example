@@ -15,13 +15,13 @@
 
         <div>
             <h1>Categories:</h1>
-            <a id="newCat" href="{{ flask.url_for('addCategory') }}" >New Category</a>
+            <a id="newCat" href="{{ url_for('addCategory') }}" >New Category</a>
         </br>
 
             {% for category in categories %}
-               <a href="{{ flask.url_for('categories', category_name=category.name) }}"> {{category.name}} </a>
-                <a id="editCat" href="{{ flask.url_for('updateCategories', category_name=category.name, category=category) }}" >Edit Category</a>
-                <a id="delCat" href="{{ flask.url_for('deleteCategories', category_name=category.name, category=category) }}" >Delete Category</a>
+               <a href="{{ url_for('categories', category_name=category.name) }}"> {{category.name}} </a>
+                <a id="editCat" href="{{ url_for('updateCategories', category_name=category.name, category=category) }}" >Edit Category</a>
+                <a id="delCat" href="{{ url_for('deleteCategories', category_name=category.name, category=category) }}" >Delete Category</a>
                 
             {% endfor %}
         </div>
@@ -29,7 +29,7 @@
         <div>
             <h1>Items:</h1>
             {% for item in items %}
-                <a href="{{ flask.url_for('items', category_id=item.category_id, item_name=item.name) }}" >{{item.name}}</a>
+                <a href="{{ url_for('items', category_id=item.category_id, item_name=item.name) }}" >{{item.name}}</a>
             {% endfor %}
         </div>
     </div>
