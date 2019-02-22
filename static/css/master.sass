@@ -1,0 +1,45 @@
+// Main color palette
+$background: #ffffff;
+$dark: #004a9f;
+$error: #ff1b1b;
+$light: #62a3ff;
+$primary: #1675d1;
+$secondary: #70dfdc;
+
+// Typography and iconography palette
+$ondark: #ffffff;
+$onerror: #000000;
+$onlight: #000000;
+$onprimary: #ffffff;
+$onsecondary: #000000;
+
+// Screen size mixins - set breakpoints for screen sizes
+@mixin xs-screen-only
+  @media only screen and (max-width: 599px)
+      @content
+
+@mixin sm-screen-up
+    @media only screen and (min-width: 600px)
+        @content
+
+@mixin med-screen-up
+    @media only screen and (min-width: 900px)
+        @content
+
+@mixin lg-screen-up
+    @media only screen and (min-width: 1200px)
+        @content
+
+// Get rid of browser-based margins and padding
+*
+    margin: 0;
+    padding: 0;
+
+//  Set doc up for easy rem units now 1rem = 10 pixels
+html 
+    font-size: 62.5%;
+
+body
+    font-size: 1.6rem;
+
+

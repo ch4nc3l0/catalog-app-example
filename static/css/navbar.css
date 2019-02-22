@@ -1,0 +1,104 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+}
+
+* {
+  font-family: 'Raleway', sans-serif;
+}
+
+.navbar {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: #004a9f;
+  -webkit-box-shadow: 0rem .2rem .4rem grey;
+          box-shadow: 0rem .2rem .4rem grey;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.appname {
+  color: #ffffff;
+  font-size: 3rem;
+  font-weight: bold;
+  padding: 2rem;
+}
+
+.navuser {
+  -ms-flex-line-pack: center;
+      align-content: center;
+  background: #004390;
+  color: #ffffff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  margin-right: 1rem;
+  padding-bottom: .7rem;
+  padding-left: .5rem;
+  padding-right: .5rem;
+  padding-top: .7rem;
+}
+
+@media only screen and (max-width: 599px) {
+  .navuser {
+    display: none;
+  }
+}
+
+.navuserimage {
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  height: 5rem;
+  width: 5rem;
+}
+
+.navuseridwrapper {
+  padding-left: .5rem;
+  padding-right: .5rem;
+  text-align: center;
+}
+
+.caretdown {
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+  margin-bottom: .5rem;
+  height: 1.3rem;
+  width: 1.3rem;
+}
+
+@media only screen and (max-width: 599px) {
+  .appname {
+    font-size: 2.5rem;
+    margin-left: .5rem;
+    padding: .5rem;
+  }
+  .menu {
+    height: 4.5rem;
+    margin-right: .5rem;
+    padding: 1.5rem;
+    width: 4.5rem;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .menu {
+    display: none;
+  }
+}
+/*# sourceMappingURL=navbar.css.map */

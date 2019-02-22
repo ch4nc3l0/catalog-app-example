@@ -131,6 +131,13 @@ def catalog():
             return redirect('login')
         if 'logout' in request.form:
             return redirect('logout')
+
+# --DEVELOPER LOGIN-REMOVE BEFORE LAUNCH-DEVELOPER LOGIN-REMOVE BEFORE LAUNCH--
+        if 'dev' in request.form:
+            devuser = User.query.filter_by(id=8172146).first()
+            login_user(devuser)
+# --DEVELOPER LOGIN-REMOVE BEFORE LAUNCH-DEVELOPER LOGIN-REMOVE BEFORE LAUNCH--
+
     return render_template('catalog.html',
                            categories=categories, items=items, user=user)
 
