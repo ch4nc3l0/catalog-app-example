@@ -4,8 +4,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
-    <link rel="stylesheet" href="../static/css/navbar.css" >
+    <!-- <link rel="stylesheet" href="../static/css/navbar.css" > -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}" >
+    <script src="../static/javascript/jquery.js"></script>
     <title>Document</title>
 </head>
 <body>
@@ -18,14 +19,14 @@
             <div class="navuser" >
                 <img class="navuserimage" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3Kbm-lKrPe_H2uB9Qo6prYkjJDoDAemj-WUNDONHUT7SDqnr3" >
                 <div class="navuseridwrapper" >
-                        <p id="navuserid" >Logged in<br /> as <br />ch4nc3l0</p>
+                    <p id="navuserid" >Logged in<br /> as <br />ch4nc3l0</p>
                 </div>
                 <object class="caretdown" type="image/svg+xml" data="../static/imgs/caret.svg"></object>
             </div>
             <object class="menu" type="image/svg+xml" data="../static/imgs/menu.svg"></object>
 
-            <form id="loginbuttform" method="POST">
-                    <input id="loginbutt" name="login" type="submit" value="Login">
+            <form class="loginbuttform" method="POST">
+                    <input class="loginbutt" name="login" type="submit" value="Login">
             </form>
        </div> 
 
@@ -70,30 +71,59 @@
 
     <!-- Script cannot be moved due to depending on python variables -->
     <script type="text/javascript">
-    let user = '{{user}}';
-    let categories = '{{categories.name}}'
-    if (user != ''){
-            document.getElementById('loginbutt').style.display = 'none';
-            document.getElementById('loginbuttform').style.display = 'none';
-            document.getElementById('logoutbutt').style.display = '';
-            document.getElementById('newcat').style.display = '';
-            document.getElementById('navuserid').style.display = '';
-            if(categories != ''){
-                document.getElementById('editcat').style.display = '';
-                document.getElementById('delcat').style.display = '';
-            }
+    function style(){
+// if user logged in
+        if (user != ''){
+            // Show login-only options
+            $( '.navuser' ).show();
+            $( '.navuserimage' ).show();
+            $( '.navuseridwrapper' ).show();
+            $( '.navuserid' ).show();
+            $( '.caretdown' ).show();
+            $( '.logoutbutt' ).show();
+            $( '.newcat' ).show();
+            $( '.editcat' ).show();
+            $( '.delcat' ).show();
+            // Remove option to login
+        }
+// if user logged out
+        else{
+            // Remove login-only options
+            $( '.navuser' ).hide();
+            $( '.navuserimage' ).hide();
+            $( '.navuseridwrapper' ).hide();
+            $( '.navuserid' ).hide();
+            $( '.caretdown' ).hide();
+            $( '.logoutbutt' ).hide();
+            $( '.newcat' ).hide();
+            $( '.editcat' ).hide();
+            $( '.delcat' ).hide();
+            // Show option to login
+            
+        };
+    };
+
+    function adaptiveDisplay(screen){
+        if (screen.matches){
+            $( '.loginbuttform' ).hide();
+            $( '.loginbutt' ).hide();
         }
         else{
-            document.getElementById('logoutbutt').style.display = 'none';
-            document.getElementById('loginbutt').style.display = '';
-            document.getElementById('loginbuttform').style.display = '';
-            document.getElementById('newcat').style.display = 'none';
-            document.getElementById('navuserid').style.display = 'none';
-            if(categories != ''){
-                document.getElementById('editcat').style.display = 'none';
-                document.getElementById('delcat').style.display = 'none';
+            if (user != ''){
+                $( '.loginbuttform' ).hide();
+                $( '.loginbutt' ).hide();
             }
-        }
+            else{
+                $( '.loginbutt' ).show();
+                $( '.loginbuttform' ).show();
+            };
+        };
+            
+    };
+    let user = '{{user}}';
+    let categories = '{{categories.name}}'
+    let smScreen = window.matchMedia("(max-width: 599px)")
+    $( document ).ready(style(), adaptiveDisplay(smScreen), smScreen.addListener(adaptiveDisplay));
     </script>
 
 </body>

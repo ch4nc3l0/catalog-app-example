@@ -1,4 +1,5 @@
 * {
+  font-family: 'Raleway', sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -9,10 +10,6 @@ html {
 
 body {
   font-size: 1.6rem;
-}
-
-* {
-  font-family: 'Raleway', sans-serif;
 }
 
 .navbar {
@@ -54,12 +51,6 @@ body {
   padding-top: .7rem;
 }
 
-@media only screen and (max-width: 599px) {
-  .navuser {
-    display: none;
-  }
-}
-
 .navuserimage {
   -ms-flex-item-align: center;
       -ms-grid-row-align: center;
@@ -93,6 +84,24 @@ body {
     margin-right: .5rem;
     padding: 1.5rem;
     width: 4.5rem;
+  }
+  .navuser {
+    display: none;
+  }
+  .navuserimage {
+    display: none;
+  }
+  .navuseridwrapper {
+    display: none;
+  }
+  .caretdown {
+    display: none;
+  }
+  .loginbuttform {
+    display: none;
+  }
+  .loginbutt {
+    display: none;
   }
 }
 

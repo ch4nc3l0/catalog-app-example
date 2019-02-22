@@ -1,7 +1,6 @@
 @import '../css/master'
 
-*
-    font-family: 'Raleway', sans-serif;
+
 
 .navbar
     align-items: center;
@@ -31,8 +30,7 @@
     padding-left: .5rem;
     padding-right: .5rem;
     padding-top: .7rem;
-    @include xs-screen-only
-        display: none;
+
     
 .navuserimage
     align-self: center;
@@ -50,19 +48,38 @@
     height: 1.3rem;
     width: 1.3rem;
 
+// If phone-sized screen display:
 @include xs-screen-only
     .appname
         font-size: 2.5rem;
         margin-left: .5rem;
         padding: .5rem;
         
-
     .menu
         height: 4.5rem;
         margin-right: .5rem;
         padding: 1.5rem
         width: 4.5rem;
+    
+    .navuser
+        display: none;
 
+    .navuserimage
+        display: none;
+
+    .navuseridwrapper
+        display: none;
+
+    .caretdown
+        display: none;
+
+    .loginbuttform
+        display: none;
+
+    .loginbutt
+        display: none;
+
+// If at lease tablet-sized screen display:
 @include sm-screen-up
     .menu
         display: none;
