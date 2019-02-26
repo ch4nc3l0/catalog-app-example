@@ -1,39 +1,68 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
-    <!-- <link rel="stylesheet" href="../static/css/navbar.css" > -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}" >
-    <script src="../static/javascript/jquery.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar[13].css') }}" >
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/xsnavbar[13].css') }}" media="(max-width: 599px)" >
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/smnavbar[13].css') }}" media="(min-width: 600px)">
+    
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}" > -->
+    
     <title>Document</title>
 </head>
 <body>
     <div>
 
-
        <div class="navbar">
             <a class="appname" >Category-App-Example</a>
-
-            <div class="navuser" >
-                <img class="navuserimage" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3Kbm-lKrPe_H2uB9Qo6prYkjJDoDAemj-WUNDONHUT7SDqnr3" >
+            <div class="navuser" tabindex="0" onclick="userdropdown()" >
+                <img class="navuserimage" alt="user image" src="{{ user.picurl }}" >
                 <div class="navuseridwrapper" >
-                    <p id="navuserid" >Logged in<br /> as <br />ch4nc3l0</p>
+                    <p id="navuserid" >Logged in<br /> as <br />{{user.username}}</p>
                 </div>
-                <object class="caretdown" type="image/svg+xml" data="../static/imgs/caret.svg"></object>
+                <img class="caretdown" src="../static/imgs/caret.svg">
             </div>
-            <object class="menu" type="image/svg+xml" data="../static/imgs/menu.svg"></object>
+
+            <button class="menubutton" tabindex="0" aria-label="menu button" onclick="showmenu()">
+                <img class="menu" alt="menubutton" src="../static/imgs/menu.svg">
+            </button>
 
             <form class="loginbuttform" method="POST">
                     <input class="loginbutt" name="login" type="submit" value="Login">
             </form>
        </div> 
 
+       <div class="navdropdown">
+           <div class="navdropprofilewrapper" tabindex="0" >
+                <a class="navdropprofile" href="{{ url_for('profile') }}">View Profile</a>
+           </div>
+           <div class="navdroplogoutwrapper" tabindex="0" onclick="">
+           <a class="navdroplogoutbutt" href="{{ url_for('logout') }}">Logout</a>
+           </div>
+        </div>
 
-            <form method="POST">
-                <input id="logoutbutt" name="logout" type="submit" value="Logout">
-            </form>
+        <div class="smallmenu">
+            <img class="smallmenuimage" style="border-radius: 50%" width="200" height="200" alt="user profile image" src="{{ user.picurl }}">
+            <img class="smallmenuimageloggedout" style="border-radius: 50%" width="200" height="200" alt="funny picture of ostrich" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9VELKV_oDIWD1AvbKgoLZQcfx_6Ts1eFaGz_cuZc2303gxIb_HA">
+            <div class="smallmenuusername">
+                <p>Hi there {{user.username}} :)</p>
+            </div>
+            <div class="smallmenuusernameloggedout">
+                <p>Hey there, anonymous! :}</p>
+            </div>
+            <div class="smallmenuprofilewrapper" tabindex="0" onclick="">
+                    <a class="smallmenuprofile" href="{{ url_for('profile') }}" >View Profile</a>
+            </div>
+            <div class="smallmenulogoutwrapper" tabindex="0" onclick="">
+                    <a class="smallmenulogout" href="{{ url_for('logout') }}" >Logout</a>
+            </div>
+            <div class="smallmenuloginwrapper" tabindex="0" onclick="">
+                    <a class="smallmenulogin" href="{{ url_for('login') }}" >Login</a>
+            </div>
+        </div>
+        <div class="smallmenuescape" onclick="hidemenu()" tabindex="0"></div>
 
         <div>
             <h1>Categories:</h1>
@@ -56,10 +85,6 @@
         </div>
     </div>
 
-
-
-
-
 <!-- --Developer Login REMOVE IN PRODUCTION-- --Developer Login REMOVE IN PRODUCTION-- -->
     <form method="POST">
             <input name="dev" type="submit" value="Dev Login">
@@ -68,63 +93,17 @@
 
 
 
+<script src="../static/javascript/jquery.js"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='javascript/navbar[1].js') }}" ></script>
+<script type="text/javascript" >
+    pageresize('{{user}}');
+    // on page resize, run functions the timer is in place for performace issues with resize-tracking
+    let resizetimer;
+    $(window).resize(function(){
+        clearTimeout(resizetimer);
+        resizetimer = setTimeout(pageresize, 325, '{{user}}');
+    });
 
-    <!-- Script cannot be moved due to depending on python variables -->
-    <script type="text/javascript">
-    function style(){
-// if user logged in
-        if (user != ''){
-            // Show login-only options
-            $( '.navuser' ).show();
-            $( '.navuserimage' ).show();
-            $( '.navuseridwrapper' ).show();
-            $( '.navuserid' ).show();
-            $( '.caretdown' ).show();
-            $( '.logoutbutt' ).show();
-            $( '.newcat' ).show();
-            $( '.editcat' ).show();
-            $( '.delcat' ).show();
-            // Remove option to login
-        }
-// if user logged out
-        else{
-            // Remove login-only options
-            $( '.navuser' ).hide();
-            $( '.navuserimage' ).hide();
-            $( '.navuseridwrapper' ).hide();
-            $( '.navuserid' ).hide();
-            $( '.caretdown' ).hide();
-            $( '.logoutbutt' ).hide();
-            $( '.newcat' ).hide();
-            $( '.editcat' ).hide();
-            $( '.delcat' ).hide();
-            // Show option to login
-            
-        };
-    };
-
-    function adaptiveDisplay(screen){
-        if (screen.matches){
-            $( '.loginbuttform' ).hide();
-            $( '.loginbutt' ).hide();
-        }
-        else{
-            if (user != ''){
-                $( '.loginbuttform' ).hide();
-                $( '.loginbutt' ).hide();
-            }
-            else{
-                $( '.loginbutt' ).show();
-                $( '.loginbuttform' ).show();
-            };
-        };
-            
-    };
-    let user = '{{user}}';
-    let categories = '{{categories.name}}'
-    let smScreen = window.matchMedia("(max-width: 599px)")
-    $( document ).ready(style(), adaptiveDisplay(smScreen), smScreen.addListener(adaptiveDisplay));
-    </script>
-
+</script>
 </body>
 </html>

@@ -1,0 +1,201 @@
+@import '../css/master'
+
+// If at lease tablet-sized screen display:
+@include sm-screen-up
+    // show
+    .appname
+        color: $ondark;
+        font-size: 3rem;
+        font-weight: bold;
+        padding: 2rem;
+        transition: font-size .5s, padding .5s;
+
+    .caretdown
+        align-self: flex-end;
+        margin-bottom: .5rem; 
+        height: 1.3rem;
+        width: 1.3rem;
+
+    .loginbutt
+        animation-duration: .2s;
+        animation-name: loginin;
+        align-content: center
+        background: darken($dark, 3%);
+        border: none;
+        color: $ondark;
+        display: none;
+        font-size: 1.8rem;
+        justify-content: space-around;
+        margin-right: 1rem;
+        padding-bottom: 2.7rem; 
+        padding-left: 3rem;
+        padding-right: 3rem;
+        padding-top: 2.7rem;
+
+    .navdropdown
+        margin-right: 1rem;
+        position: absolute;
+        display: none;
+        right: 0px
+        z-index: 2;
+        
+    .navdropdownin
+        animation-duration: .2s;
+        animation-name: navdropdownin;
+
+    .navdropdownout
+        animation-duration: .2s;
+        animation-name: navdropdownout;
+
+    .navdroplogoutbutt
+        color: $ondark;
+        user-select: none;
+        font-size: 1.7rem;
+        margin-left: 1rem;
+        text-decoration: none;
+
+    .navdroplogoutwrapper
+        background: darken($dark, 3%);
+        border-top: .2rem solid $dark 
+        padding-right: 5.5rem;
+        padding-top: .5rem;
+        padding-bottom: .5rem;
+      
+    .navdropprofile
+        color: $ondark;
+        user-select: none;
+        font-size: 1.7rem;
+        margin-left: 1rem;
+        text-decoration: none;
+
+    .navdropprofilewrapper
+        background: darken($dark, 3%);
+        padding-right: 5.5rem;
+        padding-top: .5rem;
+        padding-bottom: .5rem;
+        
+    .navuser
+        align-content: center
+        background: darken($dark, 3%);
+        color: $ondark;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-around;
+        margin-right: 1rem;
+        padding-bottom: .7rem; 
+        padding-left: .5rem;
+        padding-right: .5rem;
+        padding-top: .7rem;
+        user-select: none;
+        z-index: 3;
+    
+    .navuserimage
+        animation-duration: .2s;
+        animation-name: navimagein;
+        align-self: center;
+        object-fit: cover;
+        user-select: none
+        height: 5rem;
+        width: 5rem;
+
+    .navuseridwrapper
+        animation-duration: .2s;
+        animation-name: navtextin;
+        padding-left: .5rem;
+        padding-right: .5rem;
+        text-align: center;
+
+    .navuserid
+        animation-duration: .2s;
+        animation-name: navtextin;
+        user-select: none;
+        font-size: 1.6rem;
+
+    // hide
+    .menu
+        animation: menuout .2s 1 forwards;
+        height: 0rem;
+        margin-right: .5rem;
+        padding: 1.5rem
+        width: 0rem;
+        
+    .menubutton
+        display: none;
+
+    .smallmenu
+        display: none;
+
+    .smallmenuimage
+        display: none;
+
+    .smallmenuusername
+        display: none;
+
+    .smallmenuusernameloggedout
+        display: none;
+
+    .smallmenuimageloggedout
+        display: none;
+        
+    .smallmenuprofilewrapper
+        display: none;
+
+    .smallmenulogoutwrapper
+        display: none;
+
+    .smallmenuloginwrapper
+        display: none;
+
+    
+
+// keyframes for animations
+@keyframes loginin 
+    0%
+        padding: 0rem;
+        
+    100%
+        padding-bottom: 2.7rem; 
+        padding-left: 3rem;
+        padding-right: 3rem;
+        padding-top: 2.7rem;
+
+@keyframes menuout 
+    0%
+        font-size: 1.8rem;
+        height: 4.5rem;
+        width: 4.5rem;
+    100%
+        font-size: 0rem;
+        height: 0rem;
+        width: 0rem;
+        display: none;
+
+@keyframes navdropdownin
+    0%
+        top: 1rem;
+    100% 
+        top: 7.5rem;
+
+@keyframes navdropdownout
+    0%
+        top: 7.5rem;
+    100%
+        top: 1rem;
+
+@keyframes navimagein
+    0%
+        height: 0rem;
+        width: 0rem;
+    100%
+        height: 5rem;
+        width: 5rem;
+
+@keyframes navtextin
+    0%
+        font-size: 0rem;
+        opacity: 0%;
+
+    100%
+        font-size: 1.6rem;
+        height: 1rem;
+        opacity: 100%;

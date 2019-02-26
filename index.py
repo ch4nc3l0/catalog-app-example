@@ -136,6 +136,7 @@ def catalog():
         if 'dev' in request.form:
             devuser = User.query.filter_by(id=8172146).first()
             login_user(devuser)
+            return redirect('catalog')
 # --DEVELOPER LOGIN-REMOVE BEFORE LAUNCH-DEVELOPER LOGIN-REMOVE BEFORE LAUNCH--
 
     return render_template('catalog.html',
