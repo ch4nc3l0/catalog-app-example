@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="../static/css/minnavbar.css" > 
     <link rel="stylesheet" href="../static/css/minxsnavbar.css" media="(max-width: 599px)" > 
     <link rel="stylesheet" href="../static/css/minsmnavbar.css" media="(min-width: 600px)"> 
-    <link rel="stylesheet" href="../static/css/catalog.css">
+    <link rel="stylesheet" href="../static/css/mincatalog.css">
     
     
     <title>Document</title>
@@ -79,8 +79,6 @@
         <div class="category">
             <h1 class="cathead" >Categories</h1>
             <a class="newcat" href="{{ url_for('addCategory') }}" >New Category</a>
-        </br>
-
             {% for category in categories %}
             <div class="categorynamewrapper">
                 <a class="categoryname" href="{{ url_for('categories', category_name=category.name) }}"> {{category.name}} </a>
@@ -90,12 +88,6 @@
                 </div>
             </div> 
             {% endfor %}
-
-
-
-
-
-
         </div>
 
         <div class="items">
@@ -130,8 +122,6 @@
         clearTimeout(resizetimer);
         resizetimer = setTimeout(pageresize, 325, '{{user}}');
     });
-
-
 </script>
 </body>
 </html>

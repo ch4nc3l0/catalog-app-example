@@ -147,7 +147,7 @@ def catalog():
 @app.route('/catalog/add')
 @login_required
 def addCategory():
-    return render_template('catalog.html')
+    return render_template('addcategory.html')
 
 
 # Show all items in a catagory
