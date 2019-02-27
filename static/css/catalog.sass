@@ -1,0 +1,191 @@
+@import '../css/master'
+
+    
+.newcat
+    background: $primary;
+    border-radius: 2rem;
+    box-shadow: 0rem .1rem .3rem grey;
+    color: $onprimary;
+        
+    margin: auto;
+    margin-top: .5rem;
+    padding-bottom: .2rem
+    padding-top: .2rem
+    text-decoration: none;
+    width: 12rem
+.newcat:hover
+    background: $light;
+    box-shadow: 0rem 0rem 0rem white;
+.newcat:focus
+    background: $light;
+    box-shadow: 0rem 0rem 0rem white;
+
+.categorynamewrapper
+    display: flex;
+    font-size: 2rem;
+    justify-content: center;
+    margin: auto;
+    margin-top: 1.5rem;
+    width: 100%
+
+.categoryname
+    align-self: center;
+    background: $primary;
+    box-shadow: 0rem .1rem .3rem grey;
+    border-radius: 1.5rem;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    color: $onprimary;
+    font-size: 100%;
+
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    text-decoration: none;
+    transition: all .2s
+    width: 80%
+        
+        
+.categoryname:hover
+    background: $light;
+    box-shadow: 0rem 0rem 0rem;
+.categoryname:focus
+    background: $light;
+    box-shadow: 0rem 0rem 0rem;
+    
+
+.categorybuttons
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+.editcat
+    background: darken($secondary, 20%);;
+    border-top-right-radius: 1.5rem;
+    box-shadow: 0rem .1rem .3rem grey;
+    color: $onsecondary;
+    font-size: 1.6rem
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    text-decoration: none;
+    transition: all .2s
+    width: 6rem
+.editcat:hover
+    background: $secondary;
+    box-shadow: 0rem 0rem 0rem;
+.editcat:focus
+    background: $secondary;
+    box-shadow: 0rem 0rem 0rem;
+
+.delcat
+    background: darken($error, 15%);
+    border-bottom-right-radius: 1.5rem;
+    box-shadow: 0rem .1rem .3rem grey;
+    color: $onlight;
+    font-size: 1.6rem
+    padding-top: .38rem;
+    padding-bottom: .3rem;
+    text-decoration: none;
+    transition: all .2s
+    width: 6rem
+.delcat:hover
+    background: $error;
+    box-shadow: 0rem 0rem 0rem;
+.delcat:focus
+    background: $error;
+    box-shadow: 0rem 0rem 0rem;
+
+.item
+    align-self: center;
+    background: $primary;
+    box-shadow: 0rem .1rem .3rem grey;
+    border-radius: 1.5rem;
+    color: $onprimary;
+    font-size: 100%;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    text-decoration: none;
+    transition: all .2s
+    width: 80%
+.item:hover
+    background: $light;
+    box-shadow: 0rem 0rem 0rem;
+.item:focus
+    background: $light;
+    box-shadow: 0rem 0rem 0rem;
+
+@include xs-screen-only
+
+    
+    .category
+        border-radius: 1rem;
+        box-shadow: 0rem .1rem .3rem grey;
+        display: flex;
+        flex-direction: column;
+        margin: auto;
+        margin-top: 2rem;
+        padding: 1rem;
+        text-align: center;
+        user-select: none;
+        width: 90%;
+
+    
+
+    .items
+        border-radius: 1rem;
+        box-shadow: 0rem .1rem .3rem grey;
+        display: flex;
+        flex-direction: column;
+        margin: auto;
+        margin-top: 2rem;
+        padding: 1rem;
+        text-align: center;
+        width: 90%;
+
+    
+@include sm-screen-up
+    .bodflexwrapper
+        align-items: flex-start;
+        display: flex;
+        justify-content: space-around;
+
+    
+
+    .category
+        border-radius: 1rem;
+        box-shadow: 0rem .1rem .3rem grey;
+        display: flex;
+        flex-direction: column;
+        margin-top: 2rem;
+        padding: 1rem;
+        text-align: center;
+        width: 40%;
+
+    .cathead
+        background: white;
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+
+
+    .items
+        border-radius: 1rem;
+        box-shadow: 0rem .1rem .3rem grey;
+        display: flex;
+        flex-direction: column;
+        margin-top: 2rem;
+        padding: 1rem;
+        text-align: center;
+        width: 40%;
+
+    .itemhead
+        background: white;
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+    
+@include lg-screen-up
+    .category
+        width: 49rem;
+    .items
+        width: 49rem;
