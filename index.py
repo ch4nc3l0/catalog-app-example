@@ -153,7 +153,7 @@ def addCategory():
     if request.method == "POST":
         newcategory = Category(name=request.form['newcategory'])
         db.session.add(newcategory)
-        db.session.commit
+        db.session.commit()
         return redirect('catalog')
     return render_template('addcategory.html', user=user)
 

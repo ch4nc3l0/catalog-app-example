@@ -79,6 +79,7 @@
         <div class="category">
             <h1 class="cathead" >Categories</h1>
             <a class="newcat" href="{{ url_for('addCategory') }}" >New Category</a>
+
             {% for category in categories %}
             <div class="categorynamewrapper">
                 <a class="categoryname" href="{{ url_for('categories', category_name=category.name) }}"> {{category.name}} </a>
@@ -88,6 +89,7 @@
                 </div>
             </div> 
             {% endfor %}
+            
         </div>
 
         <div class="items">
