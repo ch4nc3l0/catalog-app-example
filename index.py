@@ -144,10 +144,18 @@ def catalog():
 
 
 # Add a new catagory to the catalog
-@app.route('/catalog/add')
+@app.route('/catalog/add', methods=['GET', 'POST'])
 @login_required
 def addCategory():
-    return render_template('addcategory.html')
+    user = ''
+    if current_user.is_authenticated:
+        user = current_user
+    if request.method == "POST":
+        newcategory = Category(name=request.form['newcategory'])
+        db.session.add(newcategory)
+        db.session.commit
+        return redirect('catalog')
+    return render_template('addcategory.html', user=user)
 
 
 # Show all items in a catagory
