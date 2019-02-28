@@ -89,7 +89,7 @@
                 </div>
             </div> 
             {% endfor %}
-            
+
         </div>
 
         <div class="items">
@@ -116,8 +116,10 @@
 <!-- <script type="text/javascript" src="{{ url_for('static', filename='javascript/navbar[1].js') }}" ></script> -->
 <!-- dev js -->
 <script type="text/javascript" src="../static/javascript/minnavbar.js" ></script>
+<script type="text/javascript" src="../static/javascript/usercheck[6].js" ></script>
 <script type="text/javascript" >
     pageresize('{{user}}');
+    loggedin('{{user}}');
     // on page resize, run functions the timer is in place for performace issues with resize-tracking
     let resizetimer;
     $(window).resize(function(){

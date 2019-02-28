@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../static/css/minnavbar.css" > 
     <link rel="stylesheet" href="../static/css/minxsnavbar.css" media="(max-width: 599px)" > 
     <link rel="stylesheet" href="../static/css/minsmnavbar.css" media="(min-width: 600px)"> 
-    <link rel="stylesheet" href="../static/css/addcategory.css" > 
+    <link rel="stylesheet" href="../static/css/addcategory[4].css" > 
 </head>
 <body>
 
@@ -62,14 +62,24 @@
             </div>
             <div class="smallmenuescape" onclick="hidemenu()" tabindex="0"></div>
     
-            
+
             <div class="form">
                 <h1>Add A New Category</h1>
-                <form method="POST">
-                    <input class="input" name="newcategory" type="text" placeholder="New Category Name">
+                <form name="newcatform" method="POST" onsubmit="event.preventDefault(); formcheck();">
+                    <input id="newcategory" class="input" name="newcategory" type="text" value="" placeholder="New Category Name">
                     <input class="subbutton" type="submit">
                 </form>
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                        <p class="formerror" >{{ message }}</p>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                {% block body %}{% endblock %}
             </div>
+
+            
 
 
 
@@ -78,6 +88,7 @@
 <!-- <script type="text/javascript" src="{{ url_for('static', filename='javascript/navbar[1].js') }}" ></script> -->
 <!-- dev js -->
 <script type="text/javascript" src="../static/javascript/minnavbar.js" ></script>
+<script type="text/javascript" src="../static/javascript/usercheck[5].js" ></script>
 <script type="text/javascript" >
 pageresize('{{user}}');
 // on page resize, run functions the timer is in place for performace issues with resize-tracking

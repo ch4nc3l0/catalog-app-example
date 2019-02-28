@@ -25,7 +25,8 @@ def load_user(id):
 
 class Category(db.Model):
     __tablename__ = 'category'
-    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    id = db.Column(db.Integer, primary_key=True, nullable=False,
+                   autoincrement=True)
     name = db.Column(db.String(80), nullable=False)
 
     def __init__(self, name):

@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from flask import Flask, request, url_for, redirect, render_template, session
+from flask import Flask, flash, request, url_for, redirect, render_template, session
 from flask_login import LoginManager, current_user
 from flask_login import login_user, logout_user, login_required
 from requests_oauthlib import OAuth2Session
@@ -151,10 +151,14 @@ def addCategory():
     if current_user.is_authenticated:
         user = current_user
     if request.method == "POST":
-        newcategory = Category(name=request.form['newcategory'])
-        db.session.add(newcategory)
-        db.session.commit()
-        return redirect('catalog')
+        if Category.query.filter_by(
+                        name=request.form['newcategory']).first() is not None:
+            flash('Category already exists please enter a new category')
+        else:
+            newcategory = Category(name=request.form['newcategory'])
+            db.session.add(newcategory)
+            db.session.commit()
+            return redirect('catalog')
     return render_template('addcategory.html', user=user)
 
 
