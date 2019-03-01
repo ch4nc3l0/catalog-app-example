@@ -158,10 +158,11 @@ def addCategory():
         user = current_user
     if request.method == "POST":
         if Category.query.filter_by(
-                        name=request.form['newcategory']).first() is not None:
+                        name=request.form.get('newcategory').strip()).first() is not None:
             flash('Category already exists please enter a new category')
         else:
-            newcategory = Category(name=request.form['newcategory'])
+            newcategory = Category(name=request.form.get('newcategory').strip())
+
             db.session.add(newcategory)
             db.session.commit()
             return redirect('catalog')
@@ -170,8 +171,13 @@ def addCategory():
 
 # Show all items in a catagory
 @app.route('/catalog/<category_name>')
-def categories():
-    return render_template('catalog.html')
+def categories(category_name):
+    category = Category.query.filter_by(name=category_name).one()
+    items = Item.query.filter_by(category_id=category.id)
+    if current_user.is_authenticated:
+        user = current_user
+    return render_template('category.html', category=category, items=items,
+                           user=user)
 
 
 # Add an item to the catagory
@@ -196,20 +202,20 @@ def deleteCategories():
 
 
 # Show item details
-@app.route('/catalog/<category_id>/<item>')
+@app.route('/catalog/<category_name>/<item>')
 def items():
     return render_template('index.html')
 
 
 # Update item details
-@app.route('/catalog/<category_id>/<item>/update')
+@app.route('/catalog/<category_name>/<item>/update')
 @login_required
 def updateItems():
     return render_template('index.html')
 
 
 # Delete item
-@app.route('/catalog/<category_id>/<item>/delete')
+@app.route('/catalog/<category_name>/<item>/delete')
 @login_required
 def deleteItems():
     return render_template('index.html')
@@ -231,6 +237,6 @@ def jsonCategories():
 
 
 # json data for an item
-@app.route('/catalog/<category_id>/<item>/json')
+@app.route('/catalog/<category_name>/<item>/json')
 def jsonItems():
     return render_template('index.html')
