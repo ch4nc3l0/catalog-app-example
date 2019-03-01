@@ -180,44 +180,52 @@ def categories(category_name):
                            user=user)
 
 
-# Add an item to the catagory
-@app.route('/catalog/<category>/add')
-@login_required
-def addCategories():
-    return render_template('catalog.html')
-
-
 # Update the current catagory
-@app.route('/catalog/<category_name>/update')
+@app.route('/catalog/<category_name>/update', methods=['GET', 'POST'])
 @login_required
-def updateCategories():
-    return render_template('index.html')
+def updateCategories(category_name):
+    if current_user.is_authenticated:
+        user = current_user
+    if request.method == 'POST':
+        if 'name' in request.form:
+            updateCat = Category.query.filter_by(name=category_name)
+            db.session.add(updateCat)
+            db.session.commit()
+            return redirect('catalog')
+    return render_template('updateCategory.html', user=user)
 
 
 # Delete the current catagory
-@app.route('/catalog/<category_name>/delete')
+@app.route('/catalog/<category_name>/delete', methods=['GET', 'POST'])
 @login_required
 def deleteCategories():
     return render_template('index.html')
 
 
+# Add an item to the catagory
+@app.route('/catalog/<category_name>/add', methods=['GET', 'POST'])
+@login_required
+def addItem(category_name):
+    return render_template('catalog.html')
+
+
 # Show item details
-@app.route('/catalog/<category_name>/<item>')
+@app.route('/catalog/<category_name>/<item_name>')
 def items():
     return render_template('index.html')
 
 
 # Update item details
-@app.route('/catalog/<category_name>/<item>/update')
+@app.route('/catalog/<category_name>/<item_name>/update', methods=['GET', 'POST'])
 @login_required
-def updateItems():
+def updateItem(category_name, item_name):
     return render_template('index.html')
 
 
 # Delete item
-@app.route('/catalog/<category_name>/<item>/delete')
+@app.route('/catalog/<category_name>/<item_name>/delete', methods=['GET', 'POST'])
 @login_required
-def deleteItems():
+def deleteItem(category_name, item_name):
     return render_template('index.html')
 
 
@@ -237,6 +245,6 @@ def jsonCategories():
 
 
 # json data for an item
-@app.route('/catalog/<category_name>/<item>/json')
+@app.route('/catalog/<category_name>/<item_name>/json')
 def jsonItems():
     return render_template('index.html')
