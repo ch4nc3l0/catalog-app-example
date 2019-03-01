@@ -1,4 +1,4 @@
-from index import db
+from index import db, ma
 from flask_login import UserMixin
 from index import logMan
 
@@ -54,3 +54,18 @@ class Item(db.Model):
 
     def __repr__(self):
         return '<id {}>'.format(self.id)
+
+
+class UserSchema(ma.ModelSchema):
+    class Meta:
+        model = User
+
+
+class CategorySchema(ma.ModelSchema):
+    class Meta:
+        model = Category
+
+
+class ItemSchema(ma.ModelSchema):
+    class Meta:
+        model = Item

@@ -2,6 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, flash, request, url_for, redirect, render_template, session
 from flask_login import LoginManager, current_user
 from flask_login import login_user, logout_user, login_required
+from flask_marshmallow import Marshmallow
 from requests_oauthlib import OAuth2Session
 import os
 
@@ -13,11 +14,16 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = os.environ['SUPER_SECRET_KEY']
 app.static_folder = 'static'
 db = SQLAlchemy(app)
+ma = Marshmallow(app)
 logMan = LoginManager(app)
 logMan.login_view = 'login'
 
 
 from models import User, Category, Item
+from models import UserSchema, CategorySchema, ItemSchema
+category_schema = CategorySchema(many=True)
+item_schema = ItemSchema(many=True)
+
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -212,7 +218,10 @@ def deleteItems():
 # json data for catalog page
 @app.route('/catalog/json')
 def jsonCatalog():
-    return render_template('index.html')
+    categories = Category.query.all()
+    response = category_schema.dumps(categories, indent=2,
+                                     separators=(',', ':')).data
+    return render_template('jsonresults.html', response=response)
 
 
 # json data for a catagory page
