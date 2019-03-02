@@ -157,12 +157,13 @@ def addCategory():
     if current_user.is_authenticated:
         user = current_user
     if request.method == "POST":
+        # Check to see if the category the user input already exists
         if Category.query.filter_by(
                         name=request.form.get('newcategory').strip()).first() is not None:
             flash('Category already exists please enter a new category')
         else:
+            # Set newcategory to user input without trailing whitespace
             newcategory = Category(name=request.form.get('newcategory').strip())
-
             db.session.add(newcategory)
             db.session.commit()
             return redirect('catalog')
@@ -184,15 +185,19 @@ def categories(category_name):
 @app.route('/catalog/<category_name>/update', methods=['GET', 'POST'])
 @login_required
 def updateCategories(category_name):
+    category = Category.query.filter_by(name=category_name).one()
     if current_user.is_authenticated:
         user = current_user
     if request.method == 'POST':
-        if 'name' in request.form:
-            updateCat = Category.query.filter_by(name=category_name)
-            db.session.add(updateCat)
+        if Category.query.filter_by(
+                name=request.form.get('editedcategory').strip()).first() is not None:
+            flash('Category already exists please enter a new category name')
+        else:
+            category.name = request.form.get('editedcategory').strip()
+            db.session.add(category)
             db.session.commit()
             return redirect('catalog')
-    return render_template('updateCategory.html', user=user)
+    return render_template('updateCategory.html', user=user, category=category)
 
 
 # Delete the current catagory
