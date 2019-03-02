@@ -85,7 +85,7 @@
                 <a class="categoryname" href="{{ url_for('categories', category_name=category.name) }}"> {{category.name}} </a>
                 <div class="categorybuttons">
                     <a class="editcat" href="{{ url_for('updateCategories', category_name=category.name) }}" >Edit</a>
-                    <a class="delcat" href="{{ url_for('deleteCategories', category_name=category.name, category=category) }}" >Delete</a>
+                    <a class="delcat" href="{{ url_for('deleteCategories', category_name=category.name) }}" >Delete</a>
                 </div>
             </div> 
             {% endfor %}

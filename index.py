@@ -103,7 +103,7 @@ def callback():
     load_profile = response.json()
 
     # Check if the user is already in the database, if so log them in
-    if User.query.filter_by(id=load_profile['id']).one() is not None:
+    if User.query.filter_by(id=load_profile['id']).first() is not None:
         user = User.query.filter_by(id=load_profile['id']).one()
         login_user(user)
 
@@ -203,8 +203,18 @@ def updateCategories(category_name):
 # Delete the current catagory
 @app.route('/catalog/<category_name>/delete', methods=['GET', 'POST'])
 @login_required
-def deleteCategories():
-    return render_template('index.html')
+def deleteCategories(category_name):
+    category = Category.query.filter_by(name=category_name).one()
+    if current_user.is_authenticated:
+        user = current_user
+    if request.method == 'POST':
+        if 'deletecategory' in request.form:
+            db.session.delete(category)
+            db.session.commit()
+            return redirect('catalog')
+        else:
+            return redirect('catalog')
+    return render_template('deleteCategory.html', user=user, category=category)
 
 
 # Add an item to the catagory
