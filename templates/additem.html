@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- dev css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/minnavbar.css') }}" > 
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/minxsnavbar.css') }}" media="(max-width: 599px)" > 
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/minsmnavbar.css') }}" media="(min-width: 600px)"> 
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/addcategory[4].css') }}" > 
+</head>
+<body>
+
+        <div class="navbar">
+                <a class="appname" href="{{ url_for('catalog') }}">Category-App-Example</a>
+                <div class="navuser" tabindex="0" onclick="userdropdown()" >
+                    <img class="navuserimage" alt="user image" src="{{ user.picurl }}" >
+                    <div class="navuseridwrapper" >
+                        <p id="navuserid" >Logged in<br /> as <br />{{user.username}}</p>
+                    </div>
+                    <img class="caretdown" src="{{ url_for('static', filename='imgs/caret.svg') }}">
+                </div>
+    
+                <button class="menubutton" tabindex="0" aria-label="menu button" onclick="showmenu()">
+                    <img class="menu" alt="menubutton" src="{{ url_for('static', filename='imgs/menu.svg') }}">
+                </button>
+    
+                <form class="loginbuttform" method="POST">
+                        <input class="loginbutt" name="login" type="submit" value="Login">
+                </form>
+           </div> 
+    
+           <div class="navdropdown">
+               <div class="navdropprofilewrapper" tabindex="0" >
+                    <a class="navdropprofile" href="{{ url_for('profile') }}">View Profile</a>
+               </div>
+               <div class="navdroplogoutwrapper" tabindex="0" onclick="">
+               <a class="navdroplogoutbutt" href="{{ url_for('logout') }}">Logout</a>
+               </div>
+            </div>
+    
+            <div class="smallmenu">
+                <img class="smallmenuimage" style="border-radius: 50%" width="200" height="200" alt="user profile image" src="{{ user.picurl }}">
+                <img class="smallmenuimageloggedout" style="border-radius: 50%" width="200" height="200" alt="funny picture of ostrich" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9VELKV_oDIWD1AvbKgoLZQcfx_6Ts1eFaGz_cuZc2303gxIb_HA">
+                <div class="smallmenuusername">
+                    <p>Hi there {{user.username}} :)</p>
+                </div>
+                <div class="smallmenuusernameloggedout">
+                    <p>Hey there, anonymous! :}</p>
+                </div>
+                <div class="smallmenuprofilewrapper" tabindex="0" >
+                        <a class="smallmenuprofile" href="{{ url_for('profile') }}" >View Profile</a>
+                </div>
+                <div class="smallmenulogoutwrapper" tabindex="0" >
+                        <a class="smallmenulogout" href="{{ url_for('logout') }}" >Logout</a>
+                </div>
+                <div class="smallmenuloginwrapper" tabindex="0" >
+                        <a class="smallmenulogin" href="{{ url_for('login') }}" >Login</a>
+                </div>
+            </div>
+            <div class="smallmenuescape" onclick="hidemenu()" tabindex="0"></div>
+    
+
+            <div class="form">
+                <h1>Add A New Item</h1>
+                <form name="newitemform" method="POST">
+                    <input id="newitem" class="input" name="newitem" type="text" value="" placeholder="New Item Name">
+                    <input id="newdescription" class="input" name="newdescription" type="text" value="" placeholder="Item Description">
+                    <input class="subbutton" type="submit">
+                </form>
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                        <p class="formerror" >{{ message }}</p>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                {% block body %}{% endblock %}
+            </div>
+
+            
+
+
+
+
+<script src="{{ url_for('static', filename='javascript/jquery.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='javascript/minnavbar.js') }}" ></script>
+<script type="text/javascript" src="{{ url_for('static', filename='javascript/additemformcheck.js') }}" ></script>
+<script type="text/javascript" >
+pageresize('{{user}}');
+// on page resize, run functions the timer is in place for performace issues with resize-tracking
+let resizetimer;
+$(window).resize(function(){
+    clearTimeout(resizetimer);
+    resizetimer = setTimeout(pageresize, 325, '{{user}}');
+});
+</script>
+</body>
+</html>

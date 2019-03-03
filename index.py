@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
-from flask import Flask, flash, request, url_for, redirect, render_template, session
+from flask import Flask, flash, request, url_for
+from flask import redirect, render_template, session
 from flask_login import LoginManager, current_user
 from flask_login import login_user, logout_user, login_required
 from flask_marshmallow import Marshmallow
@@ -20,10 +21,9 @@ logMan.login_view = 'login'
 
 
 from models import User, Category, Item
-from models import UserSchema, CategorySchema, ItemSchema
+from models import CategorySchema, ItemSchema
 category_schema = CategorySchema(many=True)
 item_schema = ItemSchema(many=True)
-
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -48,8 +48,10 @@ def profile():
     if request.method == 'POST':
         if 'revoke_github' in request.form:
             logout_user
-            return redirect('https://github.com/settings/connections/applications/%s'
-                            % os.environ['GIT_CLIENT_ID'])
+            return redirect(
+                'https://github.com/settings/connections/applications/%s'
+                % os.environ['GIT_CLIENT_ID'])
+
     user = current_user
     return render_template('profile.html', user=user)
 
@@ -129,7 +131,7 @@ def callback():
 def catalog():
     user = ''
     categories = Category.query.all()
-    items = Item.query.order_by(Item.timestamp).limit(15).all()
+    items = Item.query.order_by(Item.timestamp.desc()).limit(15).all()
     if current_user.is_authenticated:
         user = current_user
     if request.method == "POST":
@@ -159,11 +161,15 @@ def addCategory():
     if request.method == "POST":
         # Check to see if the category the user input already exists
         if Category.query.filter_by(
-                        name=request.form.get('newcategory').strip()).first() is not None:
+                        name=request.form.get(
+                            'newcategory').strip()).first() is not None:
+
             flash('Category already exists please enter a new category')
         else:
             # Set newcategory to user input without trailing whitespace
-            newcategory = Category(name=request.form.get('newcategory').strip())
+            newcategory = Category(
+                name=request.form.get('newcategory').strip())
+
             db.session.add(newcategory)
             db.session.commit()
             return redirect('catalog')
@@ -173,8 +179,9 @@ def addCategory():
 # Show all items in a catagory
 @app.route('/catalog/<category_name>')
 def categories(category_name):
+    user = ''
     category = Category.query.filter_by(name=category_name).one()
-    items = Item.query.filter_by(category_id=category.id)
+    items = Item.query.filter_by(category_id=category.id).all()
     if current_user.is_authenticated:
         user = current_user
     return render_template('category.html', category=category, items=items,
@@ -190,14 +197,16 @@ def updateCategories(category_name):
         user = current_user
     if request.method == 'POST':
         if Category.query.filter_by(
-                name=request.form.get('editedcategory').strip()).first() is not None:
+                name=request.form.get(
+                    'editedcategory').strip()).first() is not None:
+
             flash('Category already exists please enter a new category name')
         else:
             category.name = request.form.get('editedcategory').strip()
             db.session.add(category)
             db.session.commit()
             return redirect('catalog')
-    return render_template('updateCategory.html', user=user, category=category)
+    return render_template('updatecategory.html', user=user, category=category)
 
 
 # Delete the current catagory
@@ -205,61 +214,143 @@ def updateCategories(category_name):
 @login_required
 def deleteCategories(category_name):
     category = Category.query.filter_by(name=category_name).one()
+    catitems = Item.query.filter_by(category_id=category.id).all()
     if current_user.is_authenticated:
         user = current_user
     if request.method == 'POST':
         if 'deletecategory' in request.form:
+            for item in catitems:
+                db.session.delete(item)
             db.session.delete(category)
             db.session.commit()
             return redirect('catalog')
         else:
             return redirect('catalog')
-    return render_template('deleteCategory.html', user=user, category=category)
+    return render_template('deletecategory.html', user=user, category=category)
 
 
 # Add an item to the catagory
 @app.route('/catalog/<category_name>/add', methods=['GET', 'POST'])
 @login_required
 def addItem(category_name):
-    return render_template('catalog.html')
+    category = Category.query.filter_by(name=category_name).one()
+    if current_user.is_authenticated:
+        user = current_user
+    if request.method == 'POST':
+        if request.form.get('newitem').strip() == '':
+            flash('Item name needed')
+            return redirect((url_for('addItem', user=user,
+                                     category_name=category.name)))
+        if request.form.get('newdescription').strip() == '':
+            flash('Item description needed')
+            return redirect((url_for('addItem', user=user,
+                                     category_name=category.name)))
+        if Item.query.filter_by(
+                name=request.form.get('newitem').strip()).first() is not None:
+            flash('Item already exists please enter a new item name')
+            return redirect((url_for('addItem', user=user,
+                                     category_name=category.name)))
+        else:
+            newitem = Item(
+                name=request.form.get('newitem').strip(),
+                description=request.form.get('newdescription').strip(),
+                category_id=category.id)
+
+            db.session.add(newitem)
+            db.session.commit()
+            return redirect(url_for('categories', category_name=category.name))
+
+    return render_template('additem.html', user=user, category=category)
 
 
 # Show item details
-@app.route('/catalog/<category_name>/<item_name>')
-def items():
-    return render_template('index.html')
+@app.route('/catalog/<int:category_id>/<item_name>')
+def items(category_id, item_name):
+    user = ''
+    item = Item.query.filter_by(name=item_name).one()
+    if current_user.is_authenticated:
+        user = current_user
+    return render_template('itemdetails.html', item=item, user=user)
 
 
 # Update item details
-@app.route('/catalog/<category_name>/<item_name>/update', methods=['GET', 'POST'])
+@app.route('/catalog/<int:category_id>/<item_name>/update',
+           methods=['GET', 'POST'])
 @login_required
-def updateItem(category_name, item_name):
-    return render_template('index.html')
+def updateItem(category_id, item_name):
+    item = Item.query.filter_by(name=item_name).one()
+    category = Category.query.filter_by(id=category_id).one()
+    if current_user.is_authenticated:
+        user = current_user
+    if request.method == 'POST':
+        if request.form.get('updatename').strip() != '':
+            item.name = request.form.get('updatename').strip()
+        if request.form.get('updatedescription').strip() != '':
+            item.description = request.form.get('updatedescription').strip()
+        db.session.add(item)
+        db.session.commit()
+        return (redirect(url_for('categories', category_name=category.name)))
+    return render_template('updateitem.html', user=user, item=item,
+                           category=category)
 
 
 # Delete item
-@app.route('/catalog/<category_name>/<item_name>/delete', methods=['GET', 'POST'])
+@app.route('/catalog/<int:category_id>/<item_name>/delete',
+           methods=['GET', 'POST'])
 @login_required
-def deleteItem(category_name, item_name):
-    return render_template('index.html')
+def deleteItem(category_id, item_name):
+    item = Item.query.filter_by(name=item_name).one()
+    category = Category.query.filter_by(id=category_id).one()
+    if current_user.is_authenticated:
+        user = current_user
+    if request.method == 'POST':
+        if 'deleteitem' in request.form:
+            db.session.delete(item)
+            db.session.commit()
+            return (redirect(url_for('categories',
+                                     category_name=category.name)))
+
+        elif 'redirect' in request.form:
+            return (redirect(url_for('categories',
+                    category_name=category.name)))
+    return render_template('deleteitem.html', user=user, item=item,
+                           category=category)
 
 
 # json data for catalog page
 @app.route('/catalog/json')
 def jsonCatalog():
     categories = Category.query.all()
+    newitems = Item.query.order_by(Item.timestamp.desc()).limit(15).all()
     response = category_schema.dumps(categories, indent=2,
                                      separators=(',', ':')).data
-    return render_template('jsonresults.html', response=response)
+    response2 = item_schema.dumps(newitems, indent=2,
+                                  separators=(',', ':')).data
+    return render_template('jsonresults.html', response=response,
+                           response2=response2, name1='Categories',
+                           name2='Recent Items')
 
 
 # json data for a catagory page
 @app.route('/catalog/<category_name>/json')
-def jsonCategories():
-    return render_template('index.html')
+def jsonCategories(category_name):
+    jsoncategory = Category.query.filter_by(name=category_name).all()
+    category = Category.query.filter_by(name=category_name).one()
+    items = Item.query.filter_by(category_id=category.id).all()
+    response = category_schema.dumps(jsoncategory, indent=2,
+                                     separators=(',', ':')).data
+    response2 = item_schema.dumps(items, indent=2,
+                                  separators=(',', ':')).data
+    return render_template('jsonresults.html', response=response,
+                           response2=response2, name1='Category',
+                           name2='Items')
 
 
 # json data for an item
-@app.route('/catalog/<category_name>/<item_name>/json')
-def jsonItems():
-    return render_template('index.html')
+@app.route('/<item_name>/json')
+def jsonItems(item_name):
+    item = Item.query.filter_by(name=item_name).all()
+    response = item_schema.dumps(item, indent=2,
+                                 separators=(',', ':')).data
+    return render_template('jsonresults.html', response=response,
+                           name1='Item')

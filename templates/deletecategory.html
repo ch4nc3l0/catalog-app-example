@@ -66,17 +66,10 @@
 
 
          <div>
-             <h1>Delete {{ category.name }} </h1>
+             <h1>Delete {{ category.name }} & all its items</h1>
              <form action="" method="POST">
                 <input name="deletecategory" type="submit" value="DELETE">
                 <input type="submit" value="No please take me back">
-                {% with messages = get_flashed_messages() %}
-                    {% if messages %}
-                        {% for message in messages %}
-                            <p class="formerror" >{{ message }}</p>
-                        {% endfor %}
-                    {% endif %}
-                {% endwith %}
                 {% block body %}{% endblock %}
              </form>
          </div>

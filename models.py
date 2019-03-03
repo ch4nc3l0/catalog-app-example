@@ -1,6 +1,7 @@
 from index import db, ma
 from flask_login import UserMixin
 from index import logMan
+import datetime
 
 
 class User(UserMixin, db.Model):
@@ -43,13 +44,11 @@ class Item(db.Model):
     description = db.Column(db.String(1000), nullable=False)
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     name = db.Column(db.String(80), nullable=False)
-    timestamp = db.Column(db.TIMESTAMP)
+    timestamp = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
-    def __init__(self, category, category_id, description, id, name):
-        self.id = category
-        self.name = category_id
-        self.id = description
-        self.id = id
+    def __init__(self, category_id, description, name):
+        self.category_id = category_id
+        self.description = description
         self.name = name
 
     def __repr__(self):

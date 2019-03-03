@@ -69,9 +69,9 @@
         <h1>Items in {{ category.name }}</h1>
         <a href="{{ url_for('addItem', category_name=category.name) }}">Add An Item</a>
         {% for item in items %}
-            <a href="{{ url_for('items', category_name=category.name, item_name=item.name) }}">{{ item.name }}</a>
-            <a href="{{ url_for('updateItem', category_name=category.name, item_name=item.name) }}">Edit</a>
-            <a href="{{ url_for('deleteItem', category_name=category.name, item_name=item.name) }}">Delete</a>
+            <a href="{{ url_for('items', category_id=category.id, item_name=item.name) }}">{{ item.name }}</a>
+            <a href="{{ url_for('updateItem', category_id=category.id, item_name=item.name) }}">Edit</a>
+            <a href="{{ url_for('deleteItem', category_id=category.id, item_name=item.name) }}">Delete</a>
         {% endfor %}
     </div>
 
