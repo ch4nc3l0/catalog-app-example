@@ -1,3 +1,4 @@
+#!/usr/bin/env python3.7.1
 from index import db, ma
 from flask_login import UserMixin
 from index import logMan

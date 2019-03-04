@@ -1,3 +1,4 @@
+#!/usr/bin/env python3.7.1
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, flash, request, url_for
 from flask import redirect, render_template, session
