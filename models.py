@@ -33,8 +33,9 @@ class Category(db.Model):
     user = db.relationship(User)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-    def __init__(self, name):
+    def __init__(self, name, user_id):
         self.name = name
+        self.user_id = user_id
 
     def __repr__(self):
         return '<id {}>'.format(self.id)
@@ -51,10 +52,11 @@ class Item(db.Model):
     user = db.relationship(User)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-    def __init__(self, category_id, description, name):
+    def __init__(self, category_id, description, name, user_id):
         self.category_id = category_id
         self.description = description
         self.name = name
+        self.user_id = user_id
 
     def __repr__(self):
         return '<id {}>'.format(self.id)
