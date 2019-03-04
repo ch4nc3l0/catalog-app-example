@@ -1,0 +1,48 @@
+@import '../css/master'
+
+.loginform
+    align-items: center;
+    border-radius: 1.5rem;
+    box-shadow: 0rem .1rem .3rem grey;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    margin-top: 2rem;
+    padding-bottom: 4rem;
+    padding-top: 3rem;
+    width: 80%;
+
+.githubwrapper
+    display: flex;
+    margin-top: 3rem;
+
+.logingithub
+    background: #123154;
+    border: none;
+    border-radius: 1rem;
+    color: $ondark;
+    cursor: pointer;
+    font-size: 2rem;
+    padding: .5rem;
+    margin-left: 1rem;
+    transition: all .2s
+.logingithub:hover
+    background: lighten(#123154, 20%)
+.logingithub:focus
+     box-shadow: 0 0 0 2pt $secondary;
+     outline: none;
+
+.nope
+    background: $error;
+    border: none;
+    border-radius: .5rem;
+    color: white;
+    cursor: pointer;
+    margin-top: 2rem;
+    padding: .5rem;
+    transition: all .2s
+.nope:hover
+    background: lighten($error, 20%)
+.nope:focus
+     box-shadow: 0 0 0 2pt $secondary;
+     outline: none;

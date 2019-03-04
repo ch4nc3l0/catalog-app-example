@@ -1,19 +1,29 @@
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-        <form method="POST">
-                <p class='' >Login to Catagory App</p>
 
-                <input class="" name='github' type='submit' value='Login with Github'>
-                <input class='' name='redirect' type='submit' value="Nope I Don't wanna login">
-           
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/login[1].css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/minnavbar.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/minxsnavbar.css') }}" media="(max-width: 599px)">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/minsmnavbar.css') }}" media="(min-width: 600px)">
+</head>
+
+<body>
+        <div class="navbar">
+                <a class="appname" href="{{ url_for('catalog') }}">Category-App-Example</a>
+        </div>
+        <form class="loginform" method="POST">
+                <h1>Login to Catagory App</h1>
+                <div class="githubwrapper">
+                        <img class="" height="70rem" alt="github logo" src="{{url_for('static',filename='imgs/GitHub-Mark-64px.png')}}">
+                        <input class="logingithub" name='github' type='submit' value='Login with Github'>
+                </div>
+                <input class='nope' name='redirect' type='submit' value="Nope I don't wanna login">
         </form>
-        
-   
 </body>
+
 </html>

@@ -1,14 +1,23 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <!-- dev css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/minnavbar.css') }}" > 
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/minxsnavbar.css') }}" media="(max-width: 599px)" > 
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/minsmnavbar.css') }}" media="(min-width: 600px)"> 
 </head>
 <body>
-    <img src="{{user.picurl}}">
-    <h3>Your username is {{user.username}}</h3>
-    <p>your id is {{user.id}}</p>
+
+    <div class="navbar">
+        <a class="appname" href="{{ url_for('catalog') }}">Category-App-Example</a>
+    </div>
+    <img class="" style="border-radius: 50%" width="200" height="200" alt="funny picture of ostrich"
+                src="{{ user.picurl }}">
+    <h3>How's it going {{user.username}}?</h3>
     <form method="POST">
         <input type="submit" name="revoke_github" value="Revoke github permissions">
     </form>
