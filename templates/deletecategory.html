@@ -76,11 +76,16 @@
             </form>
         </div>
 
-
-
-
-
-
+        <div>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+            <p class="formerror">{{ message }}</p>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+            {% block body %}{% endblock %}
+        </div>
 
 
         <script src="{{ url_for('static', filename='javascript/jquery.js') }}"></script>

@@ -161,7 +161,8 @@ def addCategory():
         else:
             # Set newcategory to user input without trailing whitespace
             newcategory = Category(
-                name=request.form.get('newcategory').strip())
+                name=request.form.get('newcategory').strip(),
+                user_id=user.id)
 
             db.session.add(newcategory)
             db.session.commit()
@@ -192,6 +193,10 @@ def updateCategories(category_name):
     if current_user.is_authenticated:
         user = current_user
     if request.method == 'POST':
+        if category.user_id != user.id:
+            flash('Only the user that created the category can update it')
+            return redirect(url_for('updateCategories',
+                            category_name=category.name))
         if Category.query.filter_by(
                 name=request.form.get(
                     'editedcategory').strip()).first() is not None:
@@ -217,9 +222,14 @@ def updateCategories(category_name):
 def deleteCategories(category_name):
     category = Category.query.filter_by(name=category_name).one()
     catitems = Item.query.filter_by(category_id=category.id).all()
+    user = ''
     if current_user.is_authenticated:
         user = current_user
     if request.method == 'POST':
+        if category.user_id != user.id:
+            flash('Only the user that created the category can delete it')
+            return redirect(url_for('updateCategories',
+                            category_name=category.name))
         if 'deletecategory' in request.form:
             for item in catitems:
                 db.session.delete(item)
@@ -256,7 +266,7 @@ def addItem(category_name):
             newitem = Item(
                 name=request.form.get('newitem').strip(),
                 description=request.form.get('newdescription').strip(),
-                category_id=category.id)
+                category_id=category.id, user_id=user.id)
 
             db.session.add(newitem)
             db.session.commit()
@@ -288,6 +298,11 @@ def updateItem(category_id, item_name):
     if current_user.is_authenticated:
         user = current_user
     if request.method == 'POST':
+        if item.user_id != user.id:
+            flash('Only the user that created the category can update it')
+            return (redirect(url_for('updateitem.html', user=user, item=item,
+                                     category=category)))
+
         if request.form.get('updatename').strip() != '':
             item.name = request.form.get('updatename').strip()
         if request.form.get('updatedescription').strip() != '':
@@ -309,6 +324,10 @@ def deleteItem(category_id, item_name):
     if current_user.is_authenticated:
         user = current_user
     if request.method == 'POST':
+        if item.user_id != user.id:
+            flash('Only the user that created the category can delete it')
+            return (redirect(url_for('updateitem.html', user=user, item=item,
+                                     category=category)))
         if 'deleteitem' in request.form:
             db.session.delete(item)
             db.session.commit()

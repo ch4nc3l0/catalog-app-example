@@ -30,6 +30,8 @@ class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False,
                    autoincrement=True)
     name = db.Column(db.String(80), nullable=False)
+    user = db.relationship(User)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __init__(self, name):
         self.name = name
@@ -46,6 +48,8 @@ class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     name = db.Column(db.String(80), nullable=False)
     timestamp = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    user = db.relationship(User)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __init__(self, category_id, description, name):
         self.category_id = category_id
