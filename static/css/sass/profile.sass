@@ -1,0 +1,37 @@
+@import '../css/master'
+
+.wrapper
+    border-radius: 1rem;
+    box-shadow: 0rem .1rem .3rem grey;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    margin-top: 2rem;
+    padding: 1rem;
+    text-align: center;
+    width: 80%;
+
+.picture
+    margin: auto;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+
+.subbutton
+    border: none;
+    border-radius: 1rem;
+    background: darken($error, 20%);
+    color: $onprimary;
+    cursor: pointer;
+    font-size: 1.8rem;
+    margin: .2rem;
+    margin-top: 2rem;
+    padding-bottom: 1rem;
+    padding-left: .5rem;
+    padding-right: .8rem;
+    padding-top: 1.3rem; 
+    transition: all .2s;
+.subbutton:hover        
+      background: $error;
+.subbutton:focus
+     box-shadow: 0 0 0 2pt $secondary;
+     outline: none;
