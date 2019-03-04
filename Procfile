@@ -1,2 +1,2 @@
-
-web: gunicorn -b 192.168.50.4:8080 index:app
+release: python manage.py db upgrade
+web: gunicorn index:app
