@@ -298,18 +298,19 @@ def updateItem(category_id, item_name):
     if current_user.is_authenticated:
         user = current_user
     if request.method == 'POST':
-        if item.user_id != user.id:
+        if item.user_id == user.id:
+            if request.form.get('updatename').strip() != '':
+                item.name = request.form.get('updatename').strip()
+            if request.form.get('updatedescription').strip() != '':
+                item.description = request.form.get('updatedescription').strip()
+            db.session.add(item)
+            db.session.commit()
+            return (redirect(url_for('categories',
+                                     category_name=category.name)))
+        else:
             flash('Only the user that created the category can update it')
-            return (redirect(url_for('updateitem.html', user=user, item=item,
-                                     category=category)))
-
-        if request.form.get('updatename').strip() != '':
-            item.name = request.form.get('updatename').strip()
-        if request.form.get('updatedescription').strip() != '':
-            item.description = request.form.get('updatedescription').strip()
-        db.session.add(item)
-        db.session.commit()
-        return (redirect(url_for('categories', category_name=category.name)))
+            return (redirect(url_for('updateItem', item_name=item.name,
+                             category_id=category.id)))
     return render_template('updateitem.html', user=user, item=item,
                            category=category)
 
@@ -326,8 +327,8 @@ def deleteItem(category_id, item_name):
     if request.method == 'POST':
         if item.user_id != user.id:
             flash('Only the user that created the category can delete it')
-            return (redirect(url_for('updateitem.html', user=user, item=item,
-                                     category=category)))
+            return (redirect(url_for('deleteItem', item_name=item.name,
+                                     category_id=category.id)))
         if 'deleteitem' in request.form:
             db.session.delete(item)
             db.session.commit()
