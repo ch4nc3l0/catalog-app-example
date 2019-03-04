@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/minxsnavbar.css') }}" media="(max-width: 599px)" > 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/minsmnavbar.css') }}" media="(min-width: 600px)"> 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/addcategory[4].css') }}" > 
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/update[2].css') }}" >
 </head>
 <body>
 
@@ -64,12 +66,18 @@
 
 
 
-         <div>
+         <div class="wrapper">
              <h1>Update {{ item.name }} </h1>
              <form action="" method="POST">
-                <input name="updatename" type="input" placeholder="{{ item.name }}">
-                <input name="updatedescription" type="input" placeholder="{{ item.description }}">
-                <input type="submit">
+                 <div>
+                    <input class="shortinput" name="updatename" type="input" placeholder="{{ item.name }}">
+                </div>
+                <div>
+                    <textarea class="longinput" name="updatedescription" type="input" placeholder="{{ item.description }}"></textarea>
+                </div>
+                <div class="align-left">
+                <input class="subbutton" type="submit">
+                </div>
                 {% with messages = get_flashed_messages() %}
                     {% if messages %}
                         {% for message in messages %}

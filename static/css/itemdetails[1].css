@@ -1,0 +1,47 @@
+@font-face {
+  font-family: 'Raleway', sans-serif;
+  font-display: auto;
+  src: url(https://fonts.googleapis.com/css?family=Raleway:400,700);
+}
+
+* {
+  font-family: 'Raleway', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+}
+
+.wrapper {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 1.5rem;
+  -webkit-box-shadow: 0rem .1rem .3rem grey;
+          box-shadow: 0rem .1rem .3rem grey;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin: auto;
+  margin-top: 2rem;
+  padding-bottom: 4rem;
+  padding-top: 3rem;
+  width: 80%;
+}
+
+.desc {
+  text-align: center;
+  margin-top: 3rem;
+  padding: 1rem;
+}
+/*# sourceMappingURL=itemdetails.css.map */

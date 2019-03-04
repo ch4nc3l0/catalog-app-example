@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <link rel="stylesheet" href="../static/css/minnavbar.css" > 
-    <link rel="stylesheet" href="../static/css/minxsnavbar.css" media="(max-width: 599px)" > 
-    <link rel="stylesheet" href="../static/css/minsmnavbar.css" media="(min-width: 600px)"> 
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/category[1].css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/minnavbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/minxsnavbar.css') }}" media="(max-width: 599px)">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/minsmnavbar.css') }}" media="(min-width: 600px)">
 
 
     <title>Document</title>
@@ -22,11 +23,11 @@
             <div class="navuseridwrapper" >
                 <p id="navuserid" >Logged in<br /> as <br />{{user.username}}</p>
             </div>
-            <img class="caretdown" src="../static/imgs/caret.svg">
+            <img class="caretdown" src="{{ url_for('static', filename='imgs/caret.svg') }}">
         </div>
 
         <button class="menubutton" tabindex="0" aria-label="menu button" onclick="showmenu()">
-            <img class="menu" alt="menubutton" src="../static/imgs/menu.svg">
+            <img class="menu" alt="menubutton" src="{{ url_for('static', filename='imgs/menu.svg') }}">
         </button>
 
         <form class="loginbuttform" method="POST">
@@ -65,28 +66,33 @@
     <div class="smallmenuescape" onclick="hidemenu()" tabindex="0"></div>
 
 
-    <div>
+    <div class="border">
         <h1>Items in {{ category.name }}</h1>
-        <a href="{{ url_for('addItem', category_name=category.name) }}">Add An Item</a>
+        <a class="newcat" href="{{ url_for('addItem', category_name=category.name) }}">Add An Item</a>
         {% for item in items %}
-            <a href="{{ url_for('items', category_id=category.id, item_name=item.name) }}">{{ item.name }}</a>
-            <a href="{{ url_for('updateItem', category_id=category.id, item_name=item.name) }}">Edit</a>
-            <a href="{{ url_for('deleteItem', category_id=category.id, item_name=item.name) }}">Delete</a>
+        <div class="categorynamewrapper">
+            <a class="categoryname" href="{{ url_for('items', category_id=category.id, item_name=item.name) }}">{{ item.name }}</a>
+            <div class="categorybuttons">
+                <a class="editcat" href="{{ url_for('updateItem', category_id=category.id, item_name=item.name) }}">Edit</a>
+                <a class="delcat" href="{{ url_for('deleteItem', category_id=category.id, item_name=item.name) }}">Delete</a>
+            </div>
+        </div>
         {% endfor %}
     </div>
 
 
-    <script src="../static/javascript/jquery.js"></script>
-    <script type="text/javascript" src="../static/javascript/minnavbar.js" ></script>
+    <script src="{{ url_for('static', filename='javascript/jquery.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='javascript/minnavbar.js') }}" ></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='javascript/usercheck[6].js') }}"></script>
     <script type="text/javascript" >
-        pageresize('{{user}}');
-        // on page resize, run functions the timer is in place for performace issues with resize-tracking
-        let resizetimer;
-        $(window).resize(function(){
-            clearTimeout(resizetimer);
-            resizetimer = setTimeout(pageresize, 325, '{{user}}');
-        });
+    pageresize('{{user}}');
+    loggedin('{{user}}');
+    // on page resize, run functions the timer is in place for performace issues with resize-tracking
+    let resizetimer;
+    $(window).resize(function(){
+        clearTimeout(resizetimer);
+        resizetimer = setTimeout(pageresize, 325, '{{user}}');
+    });
     </script>
-    
 </body>
 </html>

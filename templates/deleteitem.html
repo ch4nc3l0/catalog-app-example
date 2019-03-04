@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/minnavbar.css') }}" > 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/minxsnavbar.css') }}" media="(max-width: 599px)" > 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/minsmnavbar.css') }}" media="(min-width: 600px)"> 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/addcategory[4].css') }}" > 
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/delete.css') }}" > 
 </head>
 <body>
 
@@ -64,11 +64,11 @@
 
 
 
-            <div>
+            <div class="wrapper">
                     <h1>Delete {{ item.name }} </h1>
-                    <form action="" method="POST">
-                       <input name="deleteitem" type="submit" value="DELETE">
-                       <input name="redirect" type="submit" value="No please take me back">
+                    <form class="deleteform" action="" method="POST">
+                       <input class="delete" name="deleteitem" type="submit" value="DELETE">
+                       <input class="redirect" name="redirect" type="submit" value="No please take me back">
                     </form>
                 </div>
 

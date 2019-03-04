@@ -1,0 +1,56 @@
+@import '../css/master'
+
+.wrapper
+    border-radius: 1rem;
+    box-shadow: 0rem .1rem .3rem grey;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    margin-top: 2rem;
+    padding: 1rem;
+    text-align: center;
+    width: 80%;
+
+.deleteform
+    align-content: center;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 2rem;
+
+.redirect
+    border: none;
+    border-radius: 1rem;
+    background: darken($primary, 20%);
+    color: $onprimary;
+    cursor: pointer;
+    font-size: 1.8rem;
+    margin: .2rem;
+    padding-bottom: 1rem;
+    padding-left: .5rem;
+    padding-right: .8rem;
+    padding-top: 1.3rem; 
+    transition: all .2s;
+.redirect:hover        
+      background: $primary;
+.redirect:focus
+     box-shadow: 0 0 0 2pt $secondary;
+     outline: none;
+
+.delete
+    border: none;
+    border-radius: 1rem;
+    background: darken($error, 20%);
+    color: $onprimary;
+    cursor: pointer;
+    font-size: 1.8rem;
+    margin: .2rem;
+    padding-bottom: 1rem;
+    padding-left: .5rem;
+    padding-right: .8rem;
+    padding-top: 1.3rem; 
+    transition: all .2s;
+.delete:hover        
+      background: $error;
+.delete:focus
+     box-shadow: 0 0 0 2pt $secondary;
+     outline: none;

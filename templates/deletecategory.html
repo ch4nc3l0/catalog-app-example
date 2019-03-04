@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="../../static/css/minxsnavbar.css" media="(max-width: 599px)" > 
     <link rel="stylesheet" href="../../static/css/minsmnavbar.css" media="(min-width: 600px)"> 
 
+    <link rel="stylesheet" href="../../static/css/delete[2].css" > 
+
 
     <title>Document</title>
 </head>
@@ -65,11 +67,11 @@
 
 
 
-         <div>
+         <div class="wrapper">
              <h1>Delete {{ category.name }} & all its items</h1>
-             <form action="" method="POST">
-                <input name="deletecategory" type="submit" value="DELETE">
-                <input type="submit" value="No please take me back">
+             <form class="deleteform" action="" method="POST">
+                <input class="delete" name="deletecategory" type="submit" value="DELETE">
+                <input class="redirect" type="submit" value="No please take me back">
                 {% block body %}{% endblock %}
              </form>
          </div>

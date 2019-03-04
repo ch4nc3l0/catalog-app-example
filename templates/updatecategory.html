@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../../static/css/minxsnavbar.css" media="(max-width: 599px)" > 
     <link rel="stylesheet" href="../../static/css/minsmnavbar.css" media="(min-width: 600px)"> 
 
+    <link rel="stylesheet" href="../../static/css/update[2].css" >
 
     <title>Document</title>
 </head>
@@ -65,11 +66,16 @@
 
 
 
-         <div>
-             <h1>Update {{ category.name }} </h1>
+         <div class="wrapper">
+             <div>
+                <h1>Update {{ category.name }} </h1>
+             </div>
              <form action="" method="POST">
-                <input name="editedcategory" type="input">
-                <input type="submit">
+                 <div>
+                    <input class="shortinput" name="editedcategory" type="input" placeholder="{{ category.name }}">
+                    <input class="subbutton" type="submit">
+                </div>
+                <div>
                 {% with messages = get_flashed_messages() %}
                     {% if messages %}
                         {% for message in messages %}
@@ -78,6 +84,7 @@
                     {% endif %}
                 {% endwith %}
                 {% block body %}{% endblock %}
+                </div>
              </form>
          </div>
 

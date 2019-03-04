@@ -177,13 +177,16 @@ def addCategory():
 
 
 # Show all items in a catagory
-@app.route('/catalog/<category_name>')
+@app.route('/catalog/<category_name>', methods=['GET', 'POST'])
 def categories(category_name):
     user = ''
     category = Category.query.filter_by(name=category_name).one()
     items = Item.query.filter_by(category_id=category.id).all()
     if current_user.is_authenticated:
         user = current_user
+    if request.method == "POST":
+        if 'login' in request.form:
+            return redirect('login')
     return render_template('category.html', category=category, items=items,
                            user=user)
 
@@ -201,6 +204,12 @@ def updateCategories(category_name):
                     'editedcategory').strip()).first() is not None:
 
             flash('Category already exists please enter a new category name')
+            return redirect(url_for('updateCategories',
+                            category_name=category.name))
+        if request.form.get('editedcategory').strip() == '':
+            flash('Category name cannot be empty')
+            return redirect(url_for('updateCategories',
+                            category_name=category.name))
         else:
             category.name = request.form.get('editedcategory').strip()
             db.session.add(category)
@@ -264,12 +273,15 @@ def addItem(category_name):
 
 
 # Show item details
-@app.route('/catalog/<int:category_id>/<item_name>')
+@app.route('/catalog/<int:category_id>/<item_name>', methods=['GET', 'POST'])
 def items(category_id, item_name):
     user = ''
     item = Item.query.filter_by(name=item_name).one()
     if current_user.is_authenticated:
         user = current_user
+    if request.method == "POST":
+        if 'login' in request.form:
+            return redirect('login')
     return render_template('itemdetails.html', item=item, user=user)
 
 
